@@ -21,7 +21,7 @@ def default_handler(self, thing, indent, is_last, prefix):
 
 
 def handle_list(self, thing, indent, is_last, prefix):
-    dtype_str = f": {len(thing)}"
+    dtype_str = f" ({len(thing)})"
     new_prefix = prefix + ("    " if is_last else "|   ")
 
     self.lines.append(
@@ -44,6 +44,7 @@ def handle_tensor(self, thing, indent, is_last, prefix):
         if indent
         else f"{type(thing).__name__}{dtype_str}"
     )
+    self.lines.append(f"{new_prefix}|  (device: {thing.device})")
 
     for i in range(thing.dim()):
         dim_str = f"dim_{i} ({thing.size(i)})"
@@ -69,3 +70,7 @@ handler_storage = {
     "std": [("default", default_handler), ("list", handle_list)],
     "torch": [("tensor", handle_tensor), ("subset", handle_subset)],
 }
+
+
+def check_storage(name):
+    return handler_storage.get(name, None)

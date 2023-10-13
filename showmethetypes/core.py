@@ -1,11 +1,25 @@
 from showmethetypes.registry import get_handler, get_registry, register_handlers
+from showmethetypes.handlers import check_storage
 
 
 class SMTT:
-    def __init__(self, custom_handlers=None):
+    def __init__(self, *custom_handlers):
+        import types
+
         self.handlers = get_registry()
-        if custom_handlers is not None:
-            self.handlers.update(custom_handlers)
+        imported_modules = {
+            name: obj
+            for name, obj in locals().items()
+            if isinstance(obj, types.ModuleType)
+        }
+        for key in imported_modules.keys():
+            handlers = check_storage(key)
+            if handlers is not None:
+                register_handlers(handlers)
+
+        if custom_handlers is not ():
+            for storage in custom_handlers:
+                register_handlers(storage)
 
     def __call__(self, obj):
         self.lines = []
@@ -16,9 +30,6 @@ class SMTT:
         # Determine the type of the current object
         handler = get_handler(type(thing).__name__.lower()) or get_handler("default")
         handler(self, thing, indent, is_last, prefix)
-
-    def register_handlers(self, storage_name):
-        register_handlers(storage_name)
 
     def display(self):
         for line in self.lines:
