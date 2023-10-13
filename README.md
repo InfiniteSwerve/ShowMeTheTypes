@@ -34,10 +34,12 @@ The default behavior is to iterate across *all* subtypes, which means it will pr
 
 SMTT will also infer your current imports and use the specific handlers available for any libraries in your `locals()`.
 ## Coverage
+SMTT is quite fresh, and so the current coverage only includes objects that I've needed to work with directly. 
+If you feel sad about any missing types, **feel free to raise an issue requesting it, or even make a PR!** Creating new handlers for types is quite straightforward. 
 
-SMTT is quite fresh, and so the current coverage only includes objects that I've needed to work with directly. If you feel sad about any missing types, feel free to raise an issue requesting it, or even make a PR! Creating new handlers for types is quite straightforward. 
 
-The libraries with any coverage are listed here, and you can find detailed coverage information in `handlers.py`. 
+
+The libraries with any coverage are listed here, and you can find detailed coverage information in [handlers.py](https://github.com/InfiniteSwerve/ShowMeTheTypes/blob/17bec1c3700bc3e35dcd47b39d004b4d2d09cd6b/showmethetypes/handlers.py#L69). 
 | Library | Total Coverage |
 |---------|----------------|
 | stdlib  | No             |
