@@ -46,9 +46,12 @@ def handle_tensor(self, thing, indent, is_last, prefix):
     )
     self.lines.append(f"{new_prefix}|  (device: {thing.device})")
 
-    for i in range(thing.dim()):
-        dim_str = f"dim_{i} ({thing.size(i)})"
-        self.lines.append(f"{new_prefix}|__{dim_str}")
+    if thing.dim() == 0:
+        self.lines.append(f"{new_prefix}|__ {thing.item()}")
+    else:
+        for i, dim in enumerate(thing.shape):
+            dim_str = f"dim_{i} ({dim})"
+            self.lines.append(f"{new_prefix}|__{dim_str}")
 
 
 def handle_subset(self, thing, indent, is_last, prefix):
@@ -65,10 +68,40 @@ def handle_subset(self, thing, indent, is_last, prefix):
         self.traverse(thing[0], indent + 1, True, new_prefix)
 
 
+def handle_int64(self, thing, indent, is_last, prefix):
+    dtype_str = ""
+    # Print the current object type
+    self.lines.append(
+        f"{prefix}|__{type(thing).__name__}{dtype_str}: {thing}"
+        if indent
+        else f"{type(thing).__name__}{dtype_str}: {thing}"
+    )
+
+
+def handle_ndarray(self, thing, indent, is_last, prefix):
+    dtype_str = f" (dtype: {thing.dtype})"
+    new_prefix = prefix + ("    " if is_last else "|   ")
+
+    # Print the current object type
+    self.lines.append(
+        f"{prefix}|__{type(thing).__name__}{dtype_str}"
+        if indent
+        else f"{type(thing).__name__}{dtype_str}"
+    )
+
+    if thing.shape == ():
+        self.lines.append(f"{new_prefix}|__{thing.item()}")
+    else:
+        for i, dim in enumerate(thing.shape):
+            dim_str = f"dim_{i} ({dim})"
+            self.lines.append(f"{new_prefix}|__{dim_str}")
+
+
 # lowercase type
 handler_storage = {
     "std": [("default", default_handler), ("list", handle_list)],
     "torch": [("tensor", handle_tensor), ("subset", handle_subset)],
+    "numpy": [("ndarray", handle_ndarray), ("int64", handle_int64)],
 }
 
 

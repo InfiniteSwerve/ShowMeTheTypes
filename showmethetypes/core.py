@@ -3,7 +3,11 @@ from showmethetypes.handlers import check_storage
 
 
 class SMTT:
-    def __init__(self, *custom_handlers):
+    # TODO: imported_handlers can be strings, need an argumnent for user defined handlers
+    def __init__(
+        self,
+        *imported_handlers,
+    ):
         import types
 
         self.handlers = get_registry()
@@ -17,8 +21,8 @@ class SMTT:
             if handlers is not None:
                 register_handlers(handlers)
 
-        if custom_handlers is not ():
-            for storage in custom_handlers:
+        if imported_handlers != ():
+            for storage in imported_handlers:
                 register_handlers(storage)
 
     def __call__(self, obj):

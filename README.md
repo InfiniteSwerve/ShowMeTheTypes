@@ -51,3 +51,4 @@ The libraries with any coverage are listed here, and you can find detailed cover
 |---------|----------------|
 | stdlib  | No             |
 | Pytorch | No             |
+| Numpy   | No             |
