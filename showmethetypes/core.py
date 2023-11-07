@@ -16,6 +16,7 @@ class SMTT:
             for name, obj in locals().items()
             if isinstance(obj, types.ModuleType)
         }
+        # TODO: checking for existing imports doesn't work, defualt user behavior is to call packages manually
         for key in imported_modules.keys():
             handlers = check_storage(key)
             if handlers is not None:
@@ -25,6 +26,7 @@ class SMTT:
             for storage in imported_handlers:
                 register_handlers(storage)
 
+    # Be able to pass in "monomorphic" = True to make default behavior find all unique lengths..
     def __call__(self, obj):
         self.lines = []
         self.traverse(obj)
