@@ -46,7 +46,7 @@ If you feel sad about any missing types, **feel free to raise an issue requestin
 
 
 
-The libraries with any coverage are listed here, and you can find detailed coverage information in [handlers.py](https://github.com/InfiniteSwerve/ShowMeTheTypes/blob/17bec1c3700bc3e35dcd47b39d004b4d2d09cd6b/showmethetypes/handlers.py#L69). 
+The libraries with any coverage are listed here, and you can find detailed coverage information in [handlers.py](https://github.com/InfiniteSwerve/ShowMeTheTypes/blob/main/showmethetypes/handlers.py). 
 | Library | Total Coverage |
 |---------|----------------|
 | stdlib  | No             |
