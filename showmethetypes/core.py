@@ -26,7 +26,6 @@ class SMTT:
         for key in imported_modules.keys():
             handlers = check_storage(key)
             if handlers is not None:
-                # print("key is", key, "handlers is", handlers)
                 register_handlers(key)
 
         if imported_handlers != ():
