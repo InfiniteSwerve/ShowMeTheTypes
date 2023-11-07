@@ -1,4 +1,8 @@
-from showmethetypes.registry import get_handler, get_registry, register_handlers
+from showmethetypes.registry import (
+    get_handler,
+    get_registry,
+    register_handlers,
+)
 from showmethetypes.handlers import check_storage
 
 
@@ -8,25 +12,26 @@ class SMTT:
         self,
         *imported_handlers,
     ):
+        import sys
         import types
 
         self.handlers = get_registry()
         imported_modules = {
             name: obj
-            for name, obj in locals().items()
+            for name, obj in sys.modules.items()
             if isinstance(obj, types.ModuleType)
         }
-        # TODO: checking for existing imports doesn't work, defualt user behavior is to call packages manually
         for key in imported_modules.keys():
             handlers = check_storage(key)
             if handlers is not None:
-                register_handlers(handlers)
+                # print("key is", key, "handlers is", handlers)
+                register_handlers(key)
 
         if imported_handlers != ():
             for storage in imported_handlers:
                 register_handlers(storage)
 
-    # Be able to pass in "monomorphic" = True to make default behavior find all unique lengths..
+    # TODO: Be able to pass in "monomorphic" = True to make default behavior find all unique lengths..
     def __call__(self, obj):
         self.lines = []
         self.traverse(obj)
