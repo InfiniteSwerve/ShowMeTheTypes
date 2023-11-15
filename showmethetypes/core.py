@@ -8,6 +8,7 @@ from showmethetypes.handlers import check_storage
 from typing import Optional, Any
 
 
+# add 'return' tag to enable string return for testing
 class SMTT:
     def __init__(
         self,
