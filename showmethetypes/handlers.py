@@ -1,8 +1,8 @@
-branch = "├──"
+branch = "├── "
 
 trunk = "│   "
 
-end = "└──"
+end = "└── "
 
 
 def default_handler(self, thing, indent, is_last, prefix):
