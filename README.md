@@ -27,11 +27,9 @@ list (5)
             |__dim_2 (128)
 ```
 ## Installation
-The package isn't yet available on pip, so a local install is the way.
+Easily done through pip.
 ```sh
-git clone https://github.com/InfiniteSwerve/ShowMeTheTypes.git
-cd ShowMeTheTypes
-pip install -e .
+pip install showmethetypes
 ```
 
 ## Behavior 
@@ -43,6 +41,10 @@ SMTT will also infer your current imports and use the specific handlers availabl
 ## Coverage
 SMTT is quite fresh, and so the current coverage only includes objects that I've needed to work with directly. 
 If you feel sad about any missing types, **feel free to raise an issue requesting it, or even make a PR!** Creating new handlers for types is quite straightforward. 
+## Testing
+You can run the tests with `pytest --nbval`.
+Since the core functionality doesn't change, the testing focus is on regression tests. For this we use pytest and nbval, using the cell outputs of jupyter notebooks to make sure the untouched cell outputs haven't changed.
+
 
 
 The libraries with any coverage are listed here, and you can find detailed coverage information in [handlers.py](https://github.com/InfiniteSwerve/ShowMeTheTypes/blob/main/showmethetypes/handlers.py). 
@@ -51,8 +53,3 @@ The libraries with any coverage are listed here, and you can find detailed cover
 | stdlib  | No             |
 | Pytorch | No             |
 | Numpy   | No             |
-
-## Testing
-You can run the tests with `pytest --nbval`.
-Since the core functionality doesn't change, the testing focus is on regression tests. For this we use pytest and nbval, using the cell outputs of jupyter notebooks to make sure the untouched cell outputs haven't changed.
-
