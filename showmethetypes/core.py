@@ -37,6 +37,8 @@ class SMTT:
                 register_handler(name, handler)
 
     # TODO: Be able to pass in "monomorphic" = True to make default behavior find all unique lengths..
+    # TODO: Be able to pass in "layers" with monomorphic to give full expansion to a layer
+    # TODO: Be able to call things bottom up
     def __call__(self, obj) -> None:
         self.lines = []
         self.traverse(obj)

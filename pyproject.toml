@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "showmethetypes"
+version = "0.1"
+authors = [
+  { name="Jay Strand", email="JackOfTheStrand@gmail.com" },
+]
+description = "A one-function package designed to do one thing.. show you the types!"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License (GPL)",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/InfiniteSwerve/showmethetypes"

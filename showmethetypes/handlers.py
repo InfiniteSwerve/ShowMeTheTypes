@@ -3,8 +3,10 @@ branch = "├── "
 trunk = "│   "
 
 end = "└── "
+# TODO: custom handler args
 
 
+# TODO: Compress the handlers
 def default_handler(self, thing, indent, is_last, prefix):
     # Boilerplate printing
     dtype_str = ""
@@ -40,7 +42,7 @@ def handle_list(self, thing, indent, is_last, prefix):
         else f"{type(thing).__name__}{dtype_str}"
     )
 
-    if thing is not []:
+    if thing:
         self.traverse(thing[0], indent + 1, True, new_prefix)
 
 
@@ -66,6 +68,21 @@ def handle_tensor(self, thing, indent, is_last, prefix):
             self.lines.append(f"{new_prefix}{infix}{dim_str}")
 
 
+def handle_linear(self, thing, indent, is_last, prefix):
+    new_prefix = prefix + ("    " if is_last else trunk)
+    infix = end if is_last else branch
+    bias = f" (bias: {True if thing.bias is not None else False})"
+
+    # Print the current object type
+    self.lines.append(
+        f"{prefix}{infix}{type(thing).__name__}{bias}"
+        if indent
+        else f"{type(thing).__name__}{bias}"
+    )
+    self.lines.append(f"{new_prefix}{branch}rows ({thing.in_features})")
+    self.lines.append(f"{new_prefix}{end}cols ({thing.out_features})")
+
+
 def handle_subset(self, thing, indent, is_last, prefix):
     dtype_str = f": {len(thing)}"
     new_prefix = prefix + ("    " if is_last else trunk)
@@ -80,6 +97,27 @@ def handle_subset(self, thing, indent, is_last, prefix):
 
     if len(thing) != 0:
         self.traverse(thing[0], indent + 1, True, new_prefix)
+
+
+def handle_dataloader(self, thing, indent, is_last, prefix):
+    dtype_str = f" ({len(thing)})"
+    new_prefix = prefix + ("    " if is_last else trunk)
+    infix = end if is_last else branch
+
+    # Print the current object type
+    self.lines.append(
+        f"{prefix}{infix}{type(thing).__name__}{dtype_str}"
+        if indent
+        else f"{type(thing).__name__}{dtype_str}"
+    )
+
+    if len(thing) != 0:
+        for d in thing:
+            data = d
+            break
+        self.traverse(data, indent + 1, True, new_prefix)
+    else:
+        pass
 
 
 def handle_int64(self, thing, indent, is_last, prefix):
@@ -116,7 +154,12 @@ def handle_ndarray(self, thing, indent, is_last, prefix):
 # lowercase type
 handler_storage = {
     "std": [("default", default_handler), ("list", handle_list)],
-    "torch": [("tensor", handle_tensor), ("subset", handle_subset)],
+    "torch": [
+        ("tensor", handle_tensor),
+        ("linear", handle_linear),
+        ("subset", handle_subset),
+        ("dataloader", handle_dataloader),
+    ],
     "numpy": [("ndarray", handle_ndarray), ("int64", handle_int64)],
 }
 
