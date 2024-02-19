@@ -27,11 +27,12 @@ list (5)
             |__dim_2 (128)
 ```
 ## Installation
-Easily done through pip.
-```sh
-pip install showmethetypes
+Done locally through pip
 ```
-
+git clone https://github.com/InfiniteSwerve/ShowMeTheTypes.git
+cd ShowMeTheTypes
+pip install -e .
+```
 ## Behavior 
 SMTT will by default display the type for whatever you pass it, and traverse all nested types if the passed object has a `__getitem__` method.
 
