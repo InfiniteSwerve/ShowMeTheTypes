@@ -15,16 +15,17 @@ tt(structure)
 ```
 ```
 list (5)
-    |__tuple
-        |__Tensor (dtype: torch.float32)
-        |   |  (device: cpu)
-        |   |__dim_0 (2)
-        |   |__dim_1 (3)
-        |__Tensor (dtype: torch.float32)
-            |  (device: cpu)
-            |__dim_0 (500)
-            |__dim_1 (5)
-            |__dim_2 (128)
+    └── tuple
+        ├── Tensor (dtype: torch.float32)
+        │   │   (device: cpu)
+        │   ├── dim_0 (2)
+        │   └── dim_1 (3)
+        └── Tensor (dtype: torch.float32)
+            │   (device: cpu)
+            ├── dim_0 (500)
+            ├── dim_1 (5)
+            └── dim_2 (128)
+
 ```
 ## Installation
 Done locally through pip
